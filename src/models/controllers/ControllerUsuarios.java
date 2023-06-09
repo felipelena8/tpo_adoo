@@ -3,6 +3,7 @@ package models.controllers;
 import models.usuarios.*;
 
 import java.util.List;
+import java.util.Random;
 
 public class ControllerUsuarios {
     private Usuario usuarioLoggeado;
@@ -26,8 +27,11 @@ public class ControllerUsuarios {
     public List<Visitante> getVisitantes(){
         return adapter.getVisitantes();
     }
-    public void iniciarSesion(String usuario, String contrasena){
-        usuarioLoggeado = adapter.iniciarSesion(usuario, contrasena);
+    public void iniciarSesionVeterinario() {
+        usuarioLoggeado = adapter.iniciarSesionVeterinario();
+    }
+    public void iniciarSesionVisitante() {
+        usuarioLoggeado = adapter.iniciarSesionVisitante();
     }
 
     public Usuario getUsuarioLoggeado() {

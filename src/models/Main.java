@@ -1,16 +1,17 @@
 package models;
 
-import models.acciones.Accion;
-import models.acciones.ChequearNutricion;
-import models.acciones.ColocarVacuna;
-import models.acciones.ComprobarPesoYTamano;
+import models.animal.FichaMedica;
+import models.animal.TratamientoMedico;
+import models.animal.acciones.Accion;
+import models.animal.acciones.ChequearNutricion;
+import models.animal.acciones.ColocarVacuna;
+import models.animal.acciones.ComprobarPesoYTamano;
 import models.alarma.Alarma;
+import models.animal.Animal;
 import models.controllers.ControllerAlarmas;
 import models.controllers.ControllerFichasMedicas;
 import models.controllers.ControllerUsuarios;
-import models.usuarios.AdapterUsuario;
 import models.usuarios.Veterinario;
-import models.utils.FormatoFecha;
 import models.utils.Periodo;
 
 import java.util.ArrayList;
@@ -23,18 +24,27 @@ public class Main {
         ControllerAlarmas controladorAlarmas = ControllerAlarmas.getInstancia();
         ControllerFichasMedicas controladorFichas = ControllerFichasMedicas.getInstancia();
         ControllerUsuarios controladorUsuarios = ControllerUsuarios.getInstancia();
-        controladorUsuarios.iniciarSesion("veterinario1","contrasena1");
+        controladorUsuarios.iniciarSesionVeterinario();
         List<Accion> acciones = new ArrayList<Accion>();
         acciones.add(new ColocarVacuna());
         acciones.add(new ChequearNutricion());
         acciones.add(new ComprobarPesoYTamano());
 
         controladorFichas.crearFichaMedica(new Animal("Yuma",50,15,3,"Perro",true));
+        FichaMedica yuma = controladorFichas.buscarFichaMedicaPorNombre("Yuma");
+        yuma.iniciarTratamiento(acciones, "hermosura");
+        TratamientoMedico tratamientoHermosura = yuma.buscarTratamientoMedico("hermosura");
         controladorFichas.imprimirFichasMedicas();
-        controladorAlarmas.crearAlarma("Alarma 1", Periodo.crear(0,0,0,0,10),acciones, new Date(), controladorFichas.buscarFichaMedica(2093176254));
-        Alarma alarma = controladorAlarmas.buscarAlarma("Alarma 1");
+        controladorAlarmas.crearAlarma("Alarma por tratamiento hermosura", Periodo.crear(0,0,0,0,10),new Date(), tratamientoHermosura);
+        Alarma alarma = controladorAlarmas.buscarAlarma("Alarma por tratamiento hermosura");
         alarma.atender((Veterinario) controladorUsuarios.getUsuarioLoggeado());
-        alarma.concluir("Se siente mejor");
 
+        Veterinario vete2 = new Veterinario("marquinhos", "1234", "Marcos", "qsyo");
+        alarma.atender(vete2);
+        Veterinario vete3 = new Veterinario("jorge","1234","Jorge","jorgito");
+        tratamientoHermosura.finalizar();
+        alarma.atender(vete3);
+        tratamientoHermosura.iniciar();
+        alarma.atender(vete3);
     }
 }

@@ -1,6 +1,6 @@
 package models.adopcion;
 
-import models.Animal;
+import models.animal.Animal;
 
 import java.util.List;
 

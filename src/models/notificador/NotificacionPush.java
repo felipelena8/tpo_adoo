@@ -6,4 +6,8 @@ public class NotificacionPush implements EstrategiaNotificacion{
     public void enviar(Notificacion notificacion) {
         adapter.enviarPush(notificacion);
     }
+
+    public NotificacionPush(AdapterNotificadorPush adapter) {
+        this.adapter = adapter;
+    }
 }

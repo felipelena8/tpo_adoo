@@ -1,4 +1,4 @@
-package models;
+package models.animal;
 
 public class Animal {
     private String nombre;

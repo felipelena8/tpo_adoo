@@ -7,4 +7,8 @@ public class NotificacionWhatsApp implements EstrategiaNotificacion{
     public void enviar(Notificacion notificacion) {
         adapter.enviarWhatsApp(notificacion);
     }
+
+    public NotificacionWhatsApp(AdapterNotificadorWhatsApp adapter) {
+        this.adapter = adapter;
+    }
 }

@@ -1,4 +1,4 @@
-package models.acciones;
+package models.animal.acciones;
 
 public class ComprobarPesoYTamano extends Accion{
     public ComprobarPesoYTamano() {

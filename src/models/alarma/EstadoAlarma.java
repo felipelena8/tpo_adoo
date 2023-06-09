@@ -1,21 +1,14 @@
 package models.alarma;
 
+import models.notificador.Notificacion;
 import models.usuarios.Veterinario;
 
 public abstract class EstadoAlarma {
-    public Veterinario getEncargado() {
-        return encargado;
-    }
 
-    public void setEncargado(Veterinario encargado) {
-        this.encargado = encargado;
-    }
 
-    private Veterinario encargado;
     public abstract void atender(Alarma contexto, Veterinario veterinario);
-    public abstract void concluir(Alarma contexto, String observacion);
+    public abstract void desactivarAlarma(Alarma contexto);
+    public abstract void activarAlarma(Alarma contexto);
+    public abstract boolean debeSonar(Alarma contexto);
 
-    public EstadoAlarma(Veterinario encargado) {
-        this.encargado = encargado;
-    }
 }

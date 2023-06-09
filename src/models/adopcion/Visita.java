@@ -6,6 +6,11 @@ public class Visita {
     private Encuesta encuesta;
     private Date fecha;
 
+    public Visita(Encuesta encuesta, Date fecha) {
+        this.encuesta = encuesta;
+        this.fecha = fecha;
+    }
+
     public Encuesta getEncuesta() {
         return encuesta;
     }

@@ -1,7 +1,10 @@
 package models.usuarios;
 
+import models.adopcion.Visita;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AdapterUsuario implements IAdapterUsuario{
 
@@ -18,14 +21,25 @@ public class AdapterUsuario implements IAdapterUsuario{
         return veterinarios;
     }
 
+    public List<Visitante> getVisitantes() {
+        List<Visitante> visitantes = new ArrayList<>();
+        visitantes.add(new Visitante("visitante1", "contrasena1", "Juan", "Gómez"));
+        visitantes.add(new Visitante("visitante2", "contrasena2", "María", "López"));
+        visitantes.add(new Visitante("visitante3", "contrasena3", "Carlos", "Rodríguez"));
+        visitantes.add(new Visitante("visitante4", "contrasena4", "Laura", "Fernández"));
+        return visitantes;
+    }
+
     @Override
     public Visitante iniciarSesionVisitante() {
-       return new Visitante("visitante1", "contrasena1", "Lucía", "García");
+        Random rand = new Random();
+        return getVisitantes().get(rand.nextInt(getVisitantes().size()));
     }
 
     @Override
     public Veterinario iniciarSesionVeterinario() {
-        return new Veterinario("veterinario1", "contrasena1", "Juan", "Gómez");
+        Random rand = new Random();
+        return getVeterinarios().get(rand.nextInt(getVeterinarios().size()));
     }
 
 }

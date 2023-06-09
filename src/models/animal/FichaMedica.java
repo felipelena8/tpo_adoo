@@ -1,7 +1,8 @@
-package models;
+package models.animal;
 
 import models.ExportarFicha.ExportadorFichaMedica;
 import models.adopcion.SeguimientoAnimal;
+import models.animal.acciones.Accion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,25 +32,22 @@ public class FichaMedica {
         return true;
     }
 
-    public TratamientoMedico buscarTratamientoMedicoSinFinalizar(String enfermedad){
-        for (TratamientoMedico tratamiento:tratamientos){
-            if(!tratamiento.estaFinalizado() && tratamiento.soyTratamientoMedico(enfermedad)){
-                return tratamiento;
-            }
-        }
-        return null;
-    }
-
-    public void iniciarNuevoTratamiento(String enfermedad){
-        if(buscarTratamientoMedicoSinFinalizar(enfermedad)==null){
-            tratamientos.add(new TratamientoMedico(enfermedad));
+    public void iniciarTratamiento(List<Accion> acciones, String enfermedad){
+        if(buscarTratamientoMedico(enfermedad)==null){
+            tratamientos.add(new TratamientoMedico(acciones, enfermedad));
         }else{
             System.out.println("Ya se esta tratando al animal por " + enfermedad);
         }
     }
 
-    public void crearControl(Control control){
-        controles.add(control);
+    public void iniciarControl(List<Accion> acciones, String nombre){
+        controles.add(new Control(acciones, nombre));
+    }
+    public TratamientoMedico buscarTratamientoMedico(String enfermedad){
+        return tratamientos.stream().filter(tratamientoMedico -> tratamientoMedico.getEnfermedad().equals(enfermedad)).findFirst().orElse(null);
+    }
+    public Control buscarControl(String nombre){
+        return controles.stream().filter(control -> control.getNombre().equals(nombre)).findFirst().orElse(null);
     }
 
     public boolean puedeSerAdoptado(){
@@ -68,16 +66,9 @@ public class FichaMedica {
         return tratamientos;
     }
 
-    public void setTratamientos(List<TratamientoMedico> tratamientos) {
-        this.tratamientos = tratamientos;
-    }
 
     public List<Control> getControles() {
         return controles;
-    }
-
-    public void setControles(List<Control> controles) {
-        this.controles = controles;
     }
 
     public ExportadorFichaMedica getExportarFicha() {

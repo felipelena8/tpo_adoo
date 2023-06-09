@@ -1,4 +1,4 @@
-package models.acciones;
+package models.animal.acciones;
 
 public class Accion {
     private boolean completada;

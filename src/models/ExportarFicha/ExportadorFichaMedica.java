@@ -1,6 +1,6 @@
 package models.ExportarFicha;
 
-import models.FichaMedica;
+import models.animal.FichaMedica;
 
 public class ExportadorFichaMedica {
     private EstrategiaExportacion estrategia;

@@ -6,4 +6,5 @@ public interface IAdapterUsuario {
     List<Veterinario> getVeterinarios();
     Visitante iniciarSesionVisitante();
     Veterinario iniciarSesionVeterinario();
+    List<Visitante> getVisitantes();
 }

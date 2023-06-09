@@ -1,7 +1,7 @@
 package models.controllers;
 
-import models.Animal;
-import models.FichaMedica;
+import models.animal.Animal;
+import models.animal.FichaMedica;
 import models.adopcion.Cliente;
 import models.adopcion.PreferenciaRecordatorio;
 import models.adopcion.SeguimientoAnimal;
@@ -25,8 +25,11 @@ public class ControllerFichasMedicas {
         }
         return instancia;
     }
-    public FichaMedica buscarFichaMedica(int nroFichaMedica){
+    public FichaMedica buscarFichaMedicaPorNro(int nroFichaMedica){
         return fichasMedicas.stream().filter(ficha -> ficha.hashCode()==nroFichaMedica).findFirst().orElse(null);
+    }
+    public FichaMedica buscarFichaMedicaPorNombre(String nombre){
+        return fichasMedicas.stream().filter(ficha -> ficha.getAnimal().getNombre().equals(nombre)).findFirst().orElse(null);
     }
 
     public void crearFichaMedica(Animal animal){

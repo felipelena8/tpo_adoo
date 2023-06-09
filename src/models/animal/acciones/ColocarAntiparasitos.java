@@ -1,4 +1,4 @@
-package models.acciones;
+package models.animal.acciones;
 
 public class ColocarAntiparasitos extends Accion{
     public ColocarAntiparasitos() {

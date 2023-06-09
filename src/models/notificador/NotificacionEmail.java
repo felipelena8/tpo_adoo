@@ -8,4 +8,8 @@ public class NotificacionEmail implements EstrategiaNotificacion {
     public void enviar(Notificacion notificacion) {
         adapter.enviarEmail(notificacion);
     }
+
+    public NotificacionEmail(AdapterNotificadorEmail adapter) {
+        this.adapter = adapter;
+    }
 }

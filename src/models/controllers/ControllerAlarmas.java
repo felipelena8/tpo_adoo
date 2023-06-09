@@ -1,10 +1,11 @@
 package models.controllers;
 
-import models.FichaMedica;
+import models.animal.FichaMedica;
 import models.adopcion.SeguimientoAnimal;
-import models.acciones.Accion;
+import models.animal.RegistroMedico;
+import models.animal.acciones.Accion;
 import models.alarma.Alarma;
-import models.alarma.AlarmaTratamientoMedico;
+import models.factories.FactoryEstrategiaNotificacion;
 import models.notificador.*;
 import models.utils.Periodo;
 
@@ -20,7 +21,7 @@ public class ControllerAlarmas {
     private final TimerTask sonarAlarmas = new TimerTask() {
         @Override
         public void run() {
-            notificador.cambiarEstrategiaNotificacion(new NotificacionPush());
+            notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacionPush());
             for (Alarma alarma : alarmas) {
                 if (alarma.debeSonar()) {
                     notificador.enviar(alarma.sonar());
@@ -29,17 +30,7 @@ public class ControllerAlarmas {
             for(SeguimientoAnimal seguimiento:seguimientos){
                 if (seguimiento.seDebeGenerarRecordatorio()){
                     Notificacion notificacion = seguimiento.generarRecordatorio();
-                    switch (seguimiento.getPreferencia()){
-                        case SMS:
-                            notificador.cambiarEstrategiaNotificacion(new NotificacionSMS());
-                            break;
-                        case EMAIL:
-                            notificador.cambiarEstrategiaNotificacion(new NotificacionEmail());
-                            break;
-                        case WHATSAPP:
-                            notificador.cambiarEstrategiaNotificacion(new NotificacionWhatsApp());
-                            break;
-                    }
+                    notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacion(seguimiento.getPreferencia()));
                     notificador.enviar(notificacion);
                 }
             }
@@ -75,10 +66,8 @@ public class ControllerAlarmas {
         alarmas.removeIf(alarma -> alarma.getNombre().equals(nombre));
     }
 
-    public void crearAlarma(String nombre, Periodo periodicidad, List<Accion> acciones, Date fechaInicio, FichaMedica fichaMedica) {
-        alarmas.add(new Alarma(nombre, periodicidad, acciones, fechaInicio, fichaMedica));
+    public void crearAlarma(String nombre, Periodo periodicidad, Date fechaInicio, RegistroMedico registroMedico) {
+        alarmas.add(new Alarma(nombre, periodicidad, fechaInicio, registroMedico));
     }
-    public void crearAlarmaTratamiento(String nombre, String enfermedad, Periodo periodicidad, List<Accion> acciones, Date fechaInicio, FichaMedica fichaMedica) {
-        alarmas.add(new AlarmaTratamientoMedico(enfermedad,nombre, periodicidad, acciones, fechaInicio, fichaMedica));
-    }
+
 }
