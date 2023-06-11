@@ -1,14 +1,12 @@
 package models.alarma;
 
-import models.animal.FichaMedica;
 import models.animal.RegistroMedico;
-import models.notificador.Notificacion;
-import models.utils.Periodo;
-import models.usuarios.Veterinario;
 import models.animal.acciones.Accion;
+import models.notificador.Notificacion;
+import models.usuarios.Veterinario;
+import models.utils.Periodo;
 
 import java.util.Date;
-import java.util.List;
 
 public class Alarma {
 
@@ -20,34 +18,35 @@ public class Alarma {
     private Date fechaInicio;
     private EstadoAlarma estado;
     private RegistroMedico registroMedico;
-    public Alarma(String nombre, Periodo periodicidad,Date fechaInicio,RegistroMedico registroMedico) {
+
+    public Alarma(String nombre, Periodo periodicidad, Date fechaInicio, RegistroMedico registroMedico) {
         estado = new EstadoDisponible();
-        this.nombre =nombre;
+        this.nombre = nombre;
         this.periodicidad = periodicidad;
         this.fechaInicio = fechaInicio;
-        this.registroMedico=registroMedico;
+        this.registroMedico = registroMedico;
     }
 
     public boolean debeSonar() {
-       return estado.debeSonar(this);
+        return estado.debeSonar(this);
     }
 
     public Notificacion sonar() {
         ultimaVez = new Date();
         String accionesStr = "Acciones a realizar:{\n";
-        for (Accion accion:registroMedico.getAcciones()){
-            accionesStr+=accion + "\n";
+        for (Accion accion : registroMedico.getAcciones()) {
+            accionesStr += accion + "\n";
         }
-        accionesStr+="}";
+        accionesStr += "}";
 
-        return new Notificacion(accionesStr,null, null);
+        return new Notificacion(accionesStr, null, null);
     }
 
-    public void desactivarAlarma(){
+    public void desactivarAlarma() {
         estado.desactivarAlarma(this);
     }
 
-    public void activarAlarma(){
+    public void activarAlarma() {
         estado.activarAlarma(this);
     }
 
@@ -59,8 +58,8 @@ public class Alarma {
         estado.atender(this, veterinario);
     }
 
-    public void cambiarEstado(EstadoAlarma estado){
-        this.estado=estado;
+    public void cambiarEstado(EstadoAlarma estado) {
+        this.estado = estado;
     }
 
     public String getNombre() {

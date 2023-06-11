@@ -11,6 +11,11 @@ public class RegistroMedico {
     private List<Accion> acciones;
     private List<SeguimientoRegistroMedico> seguimientos;
 
+    public RegistroMedico(List<Accion> acciones) {
+        this.acciones = acciones;
+        seguimientos = new ArrayList<>();
+    }
+
     public List<Accion> getAcciones() {
         return acciones;
     }
@@ -19,18 +24,15 @@ public class RegistroMedico {
         return seguimientos;
     }
 
-    public void generarSeguimiento(Date fechaRealizacion, Veterinario encargado, String observacion){
+    public void generarSeguimiento(Date fechaRealizacion, Veterinario encargado, String observacion) {
+        acciones.stream().forEach(accion -> accion.ejecutar());
         seguimientos.add(new SeguimientoRegistroMedico(fechaRealizacion, encargado, observacion));
+        System.out.println("Se ha generado un nuevo seguimiento del animal");
     }
 
-    public void imprimirSeguimientos(){
-        for(SeguimientoRegistroMedico seguimiento: seguimientos){
+    public void imprimirSeguimientos() {
+        for (SeguimientoRegistroMedico seguimiento : seguimientos) {
             System.out.println(seguimiento);
         }
-    }
-
-    public RegistroMedico(List<Accion> acciones) {
-        this.acciones = acciones;
-        seguimientos = new ArrayList<>();
     }
 }

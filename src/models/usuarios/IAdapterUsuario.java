@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface IAdapterUsuario {
     List<Veterinario> getVeterinarios();
-    Visitante iniciarSesionVisitante();
-    Veterinario iniciarSesionVeterinario();
+
+    Usuario iniciarSesion(String usuario, String password);
+
     List<Visitante> getVisitantes();
 }

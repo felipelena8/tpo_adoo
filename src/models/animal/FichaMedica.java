@@ -1,6 +1,9 @@
 package models.animal;
 
 import models.ExportarFicha.ExportadorFichaMedica;
+import models.ExportarFicha.ExportarExcel;
+import models.ExportarFicha.ExportarPDF;
+import models.ExportarFicha.TipoExportacion;
 import models.adopcion.SeguimientoAnimal;
 import models.animal.acciones.Accion;
 
@@ -20,38 +23,49 @@ public class FichaMedica {
         controles = new ArrayList<>();
         exportarFicha = new ExportadorFichaMedica();
         seguimientoAnimal = null;
-
     }
 
-    public boolean tratamientosFinalizados(){
-        for (TratamientoMedico tratamiento:tratamientos){
-            if(!tratamiento.estaFinalizado()){
+    public boolean tratamientosFinalizados() {
+        for (TratamientoMedico tratamiento : tratamientos) {
+            if (!tratamiento.estaFinalizado()) {
                 return false;
             }
         }
         return true;
     }
 
-    public void iniciarTratamiento(List<Accion> acciones, String enfermedad){
-        if(buscarTratamientoMedico(enfermedad)==null){
+    public void iniciarTratamiento(List<Accion> acciones, String enfermedad) {
+        if (buscarTratamientoMedico(enfermedad) == null) {
             tratamientos.add(new TratamientoMedico(acciones, enfermedad));
-        }else{
+        } else {
             System.out.println("Ya se esta tratando al animal por " + enfermedad);
         }
     }
 
-    public void iniciarControl(List<Accion> acciones, String nombre){
+    public void iniciarControl(List<Accion> acciones, String nombre) {
         controles.add(new Control(acciones, nombre));
     }
-    public TratamientoMedico buscarTratamientoMedico(String enfermedad){
+
+    public TratamientoMedico buscarTratamientoMedico(String enfermedad) {
         return tratamientos.stream().filter(tratamientoMedico -> tratamientoMedico.getEnfermedad().equals(enfermedad)).findFirst().orElse(null);
     }
-    public Control buscarControl(String nombre){
+
+    public Control buscarControl(String nombre) {
         return controles.stream().filter(control -> control.getNombre().equals(nombre)).findFirst().orElse(null);
     }
 
-    public boolean puedeSerAdoptado(){
-        return animal.isEsDomestico() && tratamientosFinalizados();
+    public boolean puedeSerAdoptado() {
+        boolean puedeSerAdopotado = animal.isDomestico() && tratamientosFinalizados();
+        if (puedeSerAdopotado) {
+            System.out.println("El animal puede ser adoptado");
+        } else {
+            if (!animal.isDomestico()) {
+                System.out.println("El animal no puede ser adoptado ya que no es domestico");
+            } else {
+                System.out.println("El animal no puede ser adoptado ya que sus tratamientos medicos no han sido finalizado");
+            }
+        }
+        return puedeSerAdopotado;
     }
 
     public Animal getAnimal() {
@@ -71,8 +85,13 @@ public class FichaMedica {
         return controles;
     }
 
-    public ExportadorFichaMedica getExportarFicha() {
-        return exportarFicha;
+    public void exportarFicha(TipoExportacion tipoExportacion) {
+        if (TipoExportacion.PDF.equals(tipoExportacion)) {
+            exportarFicha.cambiarEstrategiaExportacion(new ExportarPDF());
+        } else {
+            exportarFicha.cambiarEstrategiaExportacion(new ExportarExcel());
+        }
+        exportarFicha.exportarFichaMedica(this);
     }
 
     public void setExportarFicha(ExportadorFichaMedica exportarFicha) {

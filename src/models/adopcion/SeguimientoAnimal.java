@@ -1,9 +1,9 @@
 package models.adopcion;
 
+import models.notificador.Notificacion;
 import models.usuarios.Visitante;
 import models.utils.FormatoFecha;
 import models.utils.Periodo;
-import models.notificador.Notificacion;
 
 import java.util.Date;
 import java.util.List;
@@ -18,10 +18,6 @@ public class SeguimientoAnimal {
     private Cliente cliente;
     private Date fechaAdopcion;
 
-    public boolean seDebeGenerarRecordatorio(){
-            return proximaVisita().getTime()-Periodo.crear(diasPreAviso).pasarAMilisegundos()<=new Date().getTime();
-    }
-
     public SeguimientoAnimal(Visitante responsable, PreferenciaRecordatorio preferencia, Periodo cadenciaVisita, int diasPreAviso, Cliente cliente) {
         this.responsable = responsable;
         this.preferencia = preferencia;
@@ -30,19 +26,23 @@ public class SeguimientoAnimal {
         this.cliente = cliente;
     }
 
-    public Notificacion generarRecordatorio(){
-        return new Notificacion("El "+ FormatoFecha.formatoFecha(proximaVisita()) +" se realizara una visita para ver el estado del animal", cliente.getTelefono(), cliente.getEmail());
+    public boolean seDebeGenerarRecordatorio() {
+        return proximaVisita().getTime() - Periodo.crear(diasPreAviso).pasarAMilisegundos() <= new Date().getTime();
     }
 
-    public Date proximaVisita(){
-        if(visitas.size()==0){
-            return new Date(fechaAdopcion.getTime()+cadenciaVisita.pasarAMilisegundos());
-        }else{
-            return new Date(visitas.get(visitas.size()-1).getFecha().getTime()+cadenciaVisita.pasarAMilisegundos());
+    public Notificacion generarRecordatorio() {
+        return new Notificacion("El " + FormatoFecha.formatoFecha(proximaVisita()) + " se realizara una visita para ver el estado del animal", cliente.getTelefono(), cliente.getEmail());
+    }
+
+    public Date proximaVisita() {
+        if (visitas.size() == 0) {
+            return new Date(fechaAdopcion.getTime() + cadenciaVisita.pasarAMilisegundos());
+        } else {
+            return new Date(visitas.get(visitas.size() - 1).getFecha().getTime() + cadenciaVisita.pasarAMilisegundos());
         }
     }
 
-    public void seDebeFinalizarSeguimiento(boolean finalizar){
+    public void seDebeFinalizarSeguimiento(boolean finalizar) {
         seguirAnimal = finalizar;
     }
 

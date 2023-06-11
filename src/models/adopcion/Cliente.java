@@ -78,7 +78,7 @@ public class Cliente {
         this.mascotasAdoptadas = mascotasAdoptadas;
     }
 
-    private void adoptar(Animal animal){
+    public void adoptar(Animal animal) {
         mascotasAdoptadas.add(animal);
     }
 }

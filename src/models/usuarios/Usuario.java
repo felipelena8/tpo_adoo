@@ -6,6 +6,13 @@ public class Usuario {
     private String nombre;
     private String apellido;
 
+    public Usuario(String usuario, String contrasena, String nombre, String apellido) {
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
     public String getUsuario() {
         return usuario;
     }
@@ -38,15 +45,8 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public Usuario(String usuario, String contrasena, String nombre, String apellido) {
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
     @Override
     public String toString() {
-        return nombre + " "+ apellido;
+        return nombre + " " + apellido;
     }
 }

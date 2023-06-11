@@ -1,12 +1,12 @@
 package models.controllers;
 
-import models.animal.FichaMedica;
 import models.adopcion.SeguimientoAnimal;
-import models.animal.RegistroMedico;
-import models.animal.acciones.Accion;
 import models.alarma.Alarma;
+import models.animal.RegistroMedico;
 import models.factories.FactoryEstrategiaNotificacion;
-import models.notificador.*;
+import models.notificador.Notificacion;
+import models.notificador.Notificador;
+import models.usuarios.TipoUsuario;
 import models.utils.Periodo;
 
 import java.util.*;
@@ -14,31 +14,44 @@ import java.util.*;
 public class ControllerAlarmas {
 
     private static ControllerAlarmas instancia = null;
+    private final Timer timer = new Timer();
     private List<Alarma> alarmas;
     private List<SeguimientoAnimal> seguimientos;
     private Notificador notificador;
-    private final Timer timer = new Timer();
     private final TimerTask sonarAlarmas = new TimerTask() {
         @Override
         public void run() {
-            notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacionPush());
-            for (Alarma alarma : alarmas) {
-                if (alarma.debeSonar()) {
-                    notificador.enviar(alarma.sonar());
+
+            if(TipoUsuario.VETERINARIO.equals(ControllerUsuarios.getInstancia().getTipoUsuario())){
+                notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacionPush());
+                for (Alarma alarma : alarmas) {
+                    if (alarma.debeSonar()) {
+                        notificador.enviar(alarma.sonar());
+                    }
+                }
+            }else{
+                for (SeguimientoAnimal seguimiento : seguimientos) {
+                    if (seguimiento.seDebeGenerarRecordatorio()) {
+                        Notificacion notificacion = seguimiento.generarRecordatorio();
+                        notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacion(seguimiento.getPreferencia()));
+                        notificador.enviar(notificacion);
+                    }
                 }
             }
-            for(SeguimientoAnimal seguimiento:seguimientos){
-                if (seguimiento.seDebeGenerarRecordatorio()){
-                    Notificacion notificacion = seguimiento.generarRecordatorio();
-                    notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacion(seguimiento.getPreferencia()));
-                    notificador.enviar(notificacion);
-                }
-            }
+
+
         }
     };
 
-    public static ControllerAlarmas getInstancia(){
-        if(instancia==null){
+    private ControllerAlarmas() {
+        alarmas = new ArrayList<>();
+        notificador = new Notificador();
+        seguimientos = new ArrayList<>();
+        chequearAlarmasYSeguimientos();
+    }
+
+    public static ControllerAlarmas getInstancia() {
+        if (instancia == null) {
             instancia = new ControllerAlarmas();
         }
         return instancia;
@@ -48,21 +61,15 @@ public class ControllerAlarmas {
         return alarmas;
     }
 
-    public void chequearAlarmasYSeguimientos(){
-        timer.schedule(sonarAlarmas,0,1000);
-    }
-    private ControllerAlarmas(){
-        alarmas = new ArrayList<>();
-        notificador = new Notificador();
-        seguimientos = new ArrayList<>();
-        chequearAlarmasYSeguimientos();
+    public void chequearAlarmasYSeguimientos() {
+        timer.schedule(sonarAlarmas, 0, 1000);
     }
 
-    public Alarma buscarAlarma(String nombre){
+    public Alarma buscarAlarma(String nombre) {
         return alarmas.stream().filter(alarma -> alarma.getNombre().equals(nombre)).findFirst().orElse(null);
     }
 
-    public void eliminarAlarma(String nombre){
+    public void eliminarAlarma(String nombre) {
         alarmas.removeIf(alarma -> alarma.getNombre().equals(nombre));
     }
 

@@ -19,8 +19,8 @@ public class SeguimientoRegistroMedico {
     public String toString() {
         return
                 "fechaRealizacion=" + fechaRealizacion +
-                ", encargado=" + encargado +
-                ", observacion='" + observacion;
+                        ", encargado=" + encargado +
+                        ", observacion='" + observacion;
 
     }
 }

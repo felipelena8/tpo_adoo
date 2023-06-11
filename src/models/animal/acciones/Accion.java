@@ -1,16 +1,16 @@
 package models.animal.acciones;
 
 public class Accion {
-    private boolean completada;
-    private String titulo;
 
-    public void ejecutar(){
-        completada=true;
+    private final String titulo;
+
+    public Accion(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void ejecutar() {
         System.out.println("Se ha ejecutado: " + titulo);
     }
-    public Accion(String titulo){
-        this.titulo = titulo;
-  }
 
     @Override
     public String toString() {

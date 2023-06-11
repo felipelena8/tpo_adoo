@@ -4,12 +4,12 @@ import models.usuarios.Veterinario;
 
 import java.util.Date;
 
-public class EstadoDisponible extends EstadoAlarma{
+public class EstadoDisponible extends EstadoAlarma {
 
 
     @Override
     public void atender(Alarma contexto, Veterinario veterinario) {
-        System.out.println("El veterinario " + veterinario + " ha atendido la alarma '"+contexto+"'");
+        System.out.println("El veterinario " + veterinario + " ha atendido la alarma '" + contexto + "'");
         contexto.cambiarEstado(new EstadoTomada(veterinario));
     }
 
@@ -39,7 +39,6 @@ public class EstadoDisponible extends EstadoAlarma{
             return false;
         }
     }
-
 
 
 }

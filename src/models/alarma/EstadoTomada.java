@@ -1,16 +1,17 @@
 package models.alarma;
 
-import models.animal.Control;
-import models.animal.TratamientoMedico;
 import models.usuarios.Veterinario;
 
-import java.util.Date;
-
-public class EstadoTomada extends EstadoAlarma{
+public class EstadoTomada extends EstadoAlarma {
     private Veterinario encargado;
+
+    public EstadoTomada(Veterinario encargado) {
+        this.encargado = encargado;
+    }
+
     @Override
     public void atender(Alarma contexto, Veterinario veterinario) {
-        System.out.println("La alarma ya se encuentra tomada por el veterinario: " +encargado);
+        System.out.println("La alarma ya se encuentra tomada por el veterinario: " + encargado);
     }
 
     @Override
@@ -24,14 +25,9 @@ public class EstadoTomada extends EstadoAlarma{
         System.out.println("La alarma ya se encuentra activa");
     }
 
-
     @Override
     public boolean debeSonar(Alarma contexto) {
         contexto.cambiarEstado(new EstadoDisponible());
         return contexto.debeSonar();
-    }
-
-    public EstadoTomada(Veterinario encargado) {
-        this.encargado = encargado;
     }
 }

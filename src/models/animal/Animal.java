@@ -8,6 +8,15 @@ public class Animal {
     private String tipoAnimal;
     private boolean esDomestico;
 
+    public Animal(String nombre, double altura, double peso, double edad, String tipoAnimal, boolean esDomestico) {
+        this.nombre = nombre;
+        this.altura = altura;
+        this.peso = peso;
+        this.edad = edad;
+        this.tipoAnimal = tipoAnimal;
+        this.esDomestico = esDomestico;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -48,20 +57,11 @@ public class Animal {
         this.tipoAnimal = tipoAnimal;
     }
 
-    public boolean isEsDomestico() {
+    public boolean isDomestico() {
         return esDomestico;
     }
 
     public void setEsDomestico(boolean esDomestico) {
-        this.esDomestico = esDomestico;
-    }
-
-    public Animal(String nombre, double altura, double peso, double edad, String tipoAnimal, boolean esDomestico) {
-        this.nombre = nombre;
-        this.altura = altura;
-        this.peso = peso;
-        this.edad = edad;
-        this.tipoAnimal = tipoAnimal;
         this.esDomestico = esDomestico;
     }
 }
