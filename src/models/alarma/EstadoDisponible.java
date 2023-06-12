@@ -16,12 +16,12 @@ public class EstadoDisponible extends EstadoAlarma {
     @Override
     public void desactivarAlarma(Alarma contexto) {
         contexto.cambiarEstado(new EstadoInactiva());
-        System.out.println("La alarma ha pasado a estado inactiva");
+        System.out.println("La alarma " + contexto + " ha pasado a estado inactiva");
     }
 
     @Override
     public void activarAlarma(Alarma contexto) {
-        System.out.println("La alarma ya se encuentra activa");
+        System.out.println("La alarma " + contexto + " ya se encuentra activa");
     }
 
     @Override

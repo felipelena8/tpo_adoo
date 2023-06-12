@@ -20,6 +20,15 @@ public class Periodo {
         this.segundos = segundos;
     }
 
+    public static Periodo crear() {
+        int meses = Input.inputEntero("Ingrese la cantidad de meses:");
+        int dias = Input.inputEntero("Ingrese la cantidad de dias:");
+        int horas = Input.inputEntero("Ingrese la cantidad de horas:");
+        int minutos = Input.inputEntero("Ingrese la cantidad de minutos:");
+        int segundos = Input.inputEntero("Ingrese la cantidad de segundos:");
+        return crear(meses, dias, horas, minutos, segundos);
+    }
+
     public static Periodo crear(int meses, int dias, int horas, int minutos, int segundos) {
         if (segundos < 0 || dias < 0 || horas < 0 || minutos < 0 || meses < 0) {
             return null;

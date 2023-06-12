@@ -10,11 +10,7 @@ public enum TipoUsuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public TipoUsuario parseTipoUsuario(String tipoUsuario) {
+    public static TipoUsuario parseTipoUsuario(String tipoUsuario) {
         if (tipoUsuario == null) {
             return null;
         }
@@ -24,6 +20,10 @@ public enum TipoUsuario {
             }
         }
         return null;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
     }
 
 }

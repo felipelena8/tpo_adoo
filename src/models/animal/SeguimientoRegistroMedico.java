@@ -15,6 +15,18 @@ public class SeguimientoRegistroMedico {
         this.observacion = observacion;
     }
 
+    public Date getFechaRealizacion() {
+        return fechaRealizacion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public Veterinario getEncargado() {
+        return encargado;
+    }
+
     @Override
     public String toString() {
         return

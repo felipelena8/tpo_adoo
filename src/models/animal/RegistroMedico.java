@@ -2,12 +2,13 @@ package models.animal;
 
 import models.animal.acciones.Accion;
 import models.usuarios.Veterinario;
+import models.utils.FormatoFecha;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RegistroMedico {
+public abstract class RegistroMedico {
     private List<Accion> acciones;
     private List<SeguimientoRegistroMedico> seguimientos;
 
@@ -31,8 +32,9 @@ public class RegistroMedico {
     }
 
     public void imprimirSeguimientos() {
+        System.out.println("       Fecha        | Encargado | Observacion");
         for (SeguimientoRegistroMedico seguimiento : seguimientos) {
-            System.out.println(seguimiento);
+            System.out.println(FormatoFecha.formatoFecha(seguimiento.getFechaRealizacion()) + " | " + seguimiento.getEncargado() + " | " + seguimiento.getObservacion());
         }
     }
 }

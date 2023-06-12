@@ -70,10 +70,6 @@ public class Alarma {
         return registroMedico;
     }
 
-    public void setRegistroMedico(RegistroMedico registroMedico) {
-        this.registroMedico = registroMedico;
-    }
-
     public Date getUltimaVez() {
         return ultimaVez;
     }
@@ -84,9 +80,6 @@ public class Alarma {
 
     @Override
     public String toString() {
-        return "Alarma{" +
-                "nombre='" + nombre + '\'' +
-                ", acciones=" + registroMedico.getAcciones() +
-                '}';
+        return nombre;
     }
 }

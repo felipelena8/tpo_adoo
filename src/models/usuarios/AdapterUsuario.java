@@ -19,8 +19,8 @@ public class AdapterUsuario implements IAdapterUsuario {
     }
 
     @Override
-    public Usuario iniciarSesion(String usuario, String password) {
-        return new Usuario(usuario, password, "María", "Fernández");
+    public UsuarioDTO iniciarSesion(String usuario, String password) {
+        return new UsuarioDTO(usuario, password, "Juan", "Gómez");
     }
 
     public List<Visitante> getVisitantes() {

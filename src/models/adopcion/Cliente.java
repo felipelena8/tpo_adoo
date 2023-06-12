@@ -2,6 +2,7 @@ package models.adopcion;
 
 import models.animal.Animal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
@@ -13,6 +14,16 @@ public class Cliente {
     private int mascotas;
     private String motivoAdopcion;
     private List<Animal> mascotasAdoptadas;
+    public Cliente(String nombre, String apellido, String email, String telefono, Ocupacion ocupacion, int mascotas, String motivoAdopcion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.ocupacion = ocupacion;
+        this.mascotas = mascotas;
+        this.motivoAdopcion = motivoAdopcion;
+        mascotasAdoptadas = new ArrayList<>();
+    }
 
     public String getNombre() {
         return nombre;
@@ -81,4 +92,6 @@ public class Cliente {
     public void adoptar(Animal animal) {
         mascotasAdoptadas.add(animal);
     }
+
+
 }

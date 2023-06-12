@@ -13,7 +13,7 @@ import java.util.List;
 public class FichaMedica {
     private Animal animal;
     private List<TratamientoMedico> tratamientos;
-    private List<Control> controles = new ArrayList<>();
+    private List<Control> controles;
     private ExportadorFichaMedica exportarFicha;
     private SeguimientoAnimal seguimientoAnimal;
 
@@ -23,6 +23,14 @@ public class FichaMedica {
         controles = new ArrayList<>();
         exportarFicha = new ExportadorFichaMedica();
         seguimientoAnimal = null;
+    }
+
+    public ExportadorFichaMedica getExportarFicha() {
+        return exportarFicha;
+    }
+
+    public void setExportarFicha(ExportadorFichaMedica exportarFicha) {
+        this.exportarFicha = exportarFicha;
     }
 
     public boolean tratamientosFinalizados() {
@@ -37,8 +45,15 @@ public class FichaMedica {
     public void iniciarTratamiento(List<Accion> acciones, String enfermedad) {
         if (buscarTratamientoMedico(enfermedad) == null) {
             tratamientos.add(new TratamientoMedico(acciones, enfermedad));
+            System.out.println("Tratamiento por " + enfermedad + " iniciado");
         } else {
             System.out.println("Ya se esta tratando al animal por " + enfermedad);
+        }
+    }
+
+    public void pausarControles() {
+        for (Control control : controles) {
+            control.pausar();
         }
     }
 
@@ -80,22 +95,16 @@ public class FichaMedica {
         return tratamientos;
     }
 
-
     public List<Control> getControles() {
         return controles;
     }
 
     public void exportarFicha(TipoExportacion tipoExportacion) {
-        if (TipoExportacion.PDF.equals(tipoExportacion)) {
-            exportarFicha.cambiarEstrategiaExportacion(new ExportarPDF());
-        } else {
-            exportarFicha.cambiarEstrategiaExportacion(new ExportarExcel());
+        switch (tipoExportacion) {
+            case PDF -> exportarFicha.cambiarEstrategiaExportacion(new ExportarPDF());
+            case EXCEL -> exportarFicha.cambiarEstrategiaExportacion(new ExportarExcel());
         }
         exportarFicha.exportarFichaMedica(this);
-    }
-
-    public void setExportarFicha(ExportadorFichaMedica exportarFicha) {
-        this.exportarFicha = exportarFicha;
     }
 
     public SeguimientoAnimal getSeguimientoAnimal() {
@@ -104,5 +113,19 @@ public class FichaMedica {
 
     public void setSeguimientoAnimal(SeguimientoAnimal seguimientoAnimal) {
         this.seguimientoAnimal = seguimientoAnimal;
+    }
+
+    public void verTratamientosMedicos() {
+        System.out.println("Enfermedad | Estado");
+        for (TratamientoMedico tratamientoMedico : tratamientos) {
+            System.out.println(tratamientoMedico.getEnfermedad() + " | " + (tratamientoMedico.estaFinalizado() ? "Finalizado" : "En curso"));
+        }
+    }
+
+    public void verControles() {
+        System.out.println("Nombre | Acciones");
+        for (Control control : controles) {
+            System.out.println(control.getNombre() + " | " + control.getAcciones());
+        }
     }
 }

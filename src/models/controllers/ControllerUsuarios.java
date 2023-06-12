@@ -6,14 +6,13 @@ import java.util.List;
 
 public class ControllerUsuarios {
     private static ControllerUsuarios instancia = null;
-    private Usuario usuarioLoggeado;
+    private static Usuario usuarioLoggeado;
     private TipoUsuario tipoUsuario;
     private IAdapterUsuario adapter;
 
 
     private ControllerUsuarios() {
         adapter = new AdapterUsuario();
-        usuarioLoggeado = null;
     }
 
     public static ControllerUsuarios getInstancia() {
@@ -21,6 +20,14 @@ public class ControllerUsuarios {
             instancia = new ControllerUsuarios();
         }
         return instancia;
+    }
+
+    public static Usuario getUsuarioLoggeado() {
+        return usuarioLoggeado;
+    }
+
+    public static void setUsuarioLoggeado(Usuario usuarioLoggeado) {
+        ControllerUsuarios.usuarioLoggeado = usuarioLoggeado;
     }
 
     public List<Veterinario> getVeterinarios() {
@@ -31,24 +38,26 @@ public class ControllerUsuarios {
         return adapter.getVisitantes();
     }
 
-    public Usuario getUsuarioLoggeado() {
-        return usuarioLoggeado;
-    }
-
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setUsuarioLoggeado(Usuario usuarioLoggeado) {
-        this.usuarioLoggeado = usuarioLoggeado;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public Visitante buscarVisitante(String username) {
+        return getVisitantes().stream().filter(visitante -> visitante.getUsuario().equalsIgnoreCase(username)).findFirst().orElse(null);
     }
 
     public void iniciarSesion(String usuario, String password, TipoUsuario tipoUsuario) {
-        usuarioLoggeado = adapter.iniciarSesion(usuario, password);
+        Usuario user = null;
+        switch (tipoUsuario) {
+            case VETERINARIO -> user = adapter.iniciarSesion(usuario, password).traerVeterinario();
+            case VISITANTE -> user = adapter.iniciarSesion(usuario, password).traerVisitante();
+        }
+        setUsuarioLoggeado(user);
         setTipoUsuario(tipoUsuario);
-    }
-
-    private void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+        System.out.println("Bienvenido " + usuarioLoggeado.getNombre() + " has iniciado como " + tipoUsuario.getTipoUsuario().toLowerCase());
     }
 }
