@@ -8,6 +8,7 @@ import models.factories.FactoryEstrategiaNotificacion;
 import models.notificador.Notificacion;
 import models.notificador.Notificador;
 import models.usuarios.TipoUsuario;
+import models.utils.UtilsVista;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ControllerAlarmas {
                 for (Alarma alarma : alarmas) {
                     if (alarma.debeSonar()) {
                         notificador.enviar(alarma.sonar());
+                        UtilsVista.atenderAlarma(alarma);
                     }
                 }
             } else {

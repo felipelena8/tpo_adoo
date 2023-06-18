@@ -3,6 +3,7 @@ package models.utils;
 import models.ExportarFicha.TipoExportacion;
 import models.adopcion.Cliente;
 import models.adopcion.PreferenciaRecordatorio;
+import models.alarma.Alarma;
 import models.alarma.AlarmaDTO;
 import models.animal.Control;
 import models.animal.FichaMedica;
@@ -12,15 +13,19 @@ import models.animal.acciones.Accion;
 import models.controllers.ControllerAlarmas;
 import models.controllers.ControllerFichasMedicas;
 import models.controllers.ControllerUsuarios;
+import models.usuarios.AdapterUsuario;
+import models.usuarios.Veterinario;
 import models.usuarios.Visitante;
 import vistas.VistaCliente;
 import vistas.VistaControl;
 import vistas.VistaFichaMedica;
 import vistas.VistaTratamientoMedico;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class UtilsVista {
 
@@ -101,10 +106,23 @@ public class UtilsVista {
 
     public static void crearAlarma(RegistroMedico registroMedico) {
         String nombre = Input.inputTexto("Ingrese el nombre de la alarma");
+        System.out.println("Ingrese el periodo ");
         Periodo periodicidad = Periodo.crear();
         Date fechaInicio = new Date();
         AlarmaDTO alarmaDTO = new AlarmaDTO(nombre, periodicidad, fechaInicio, registroMedico);
         ControllerAlarmas.getInstancia().crearAlarma(alarmaDTO);
     }
 
+    public static void atenderAlarma(Alarma alarma){
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("Ingresa ATENDER para atender");
+//        String respuesta =sc.nextLine();
+        int resp = JOptionPane.showConfirmDialog(null, "Deseas atender la alarma " + alarma.getNombre());
+        if(resp== JOptionPane.OK_OPTION){
+            alarma.atender((Veterinario) ControllerUsuarios.getUsuarioLoggeado());
+            alarma.atender(new Veterinario("veterinario20", "veterinario20", "Pepe", "Dominguez"));
+        }else{
+            alarma.atender(new Veterinario("veterinario4", "contrasena4", "Laura", "Fernández"));
+        }
+    }
 }

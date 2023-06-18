@@ -26,7 +26,7 @@ public class Control extends RegistroMedico {
 
     public void pausar() {
         if (!estaPausado()) {
-            System.out.println("El control por " + nombre + " ha sido pausado");
+            System.out.println("El control " + nombre + " ha sido pausado");
             ControllerAlarmas.getInstancia().getAlarmas().stream().filter(alarma -> alarma.getRegistroMedico().equals(this)).toList().forEach(Alarma::desactivarAlarma);
             pausado = true;
 

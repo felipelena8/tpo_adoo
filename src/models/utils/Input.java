@@ -7,7 +7,12 @@ public class Input {
 
     public static String inputTexto(String mensaje) {
         System.out.println(mensaje);
-        return sc.nextLine();
+        try {
+           return sc.nextLine();
+        }catch (Exception e){
+            return "";
+        }
+
     }
 
     public static int inputEntero(String mensaje) {
