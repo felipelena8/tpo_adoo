@@ -66,11 +66,13 @@ public class ControllerFichasMedicas {
 
     public void adoptarAnimal(FichaMedica fichaMedica, Cliente adoptante, Visitante visitante, PreferenciaRecordatorio preferencia, Periodo periodo, int diasPreAviso) {
         if (fichaMedica.puedeSerAdoptado() && adoptante.getMascotasAdoptadas().size() < 2) {
-            fichaMedica.setSeguimientoAnimal(new SeguimientoAnimal(visitante, preferencia, periodo, diasPreAviso, adoptante));
+            SeguimientoAnimal seguimientoAnimal = new SeguimientoAnimal(visitante, preferencia, periodo, diasPreAviso, adoptante);
+            fichaMedica.setSeguimientoAnimal(seguimientoAnimal);
             System.out.println("Pausando controles...");
             fichaMedica.pausarControles();
             adoptante.adoptar(fichaMedica.getAnimal());
-            System.out.println("El cliente: " + adoptante + " ha adoptado una nueva mascota. Se ha asignado al visitante " + visitante + " como responsable para realizar el seguimiento del animal");
+            System.out.println("El cliente: " + adoptante.getNombre() + " " + adoptante.getApellido() + " ha adoptado una nueva mascota. Se ha asignado al visitante " + visitante + " como responsable para realizar el seguimiento del animal");
+            ControllerAlarmas.getInstancia().crearAlarmaSeguimiento(seguimientoAnimal);
         } else {
             if (adoptante.getMascotasAdoptadas().size() == 2) {
                 System.out.println("El cliente no puede adoptar mas mascotas");

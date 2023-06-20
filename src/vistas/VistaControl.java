@@ -50,6 +50,6 @@ public class VistaControl {
 
     private static void generarNuevoSeguimiento() {
         String observacion = Input.inputTexto("Ingrese una observacion sobre el control realizado:");
-        control.generarSeguimiento(new Date(), (Veterinario) ControllerUsuarios.getInstancia().getUsuarioLoggeado(), observacion); //TODO ERROR EN EL CASTEO A VETERINARIO YA QUE EL USUARIO LOGGEADO ES UN 'USUARIO'
+        control.generarSeguimiento(new Date(), (Veterinario) ControllerUsuarios.getInstancia().getUsuarioLoggeado(), observacion);
     }
 }

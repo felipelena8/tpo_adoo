@@ -13,7 +13,6 @@ import models.animal.acciones.Accion;
 import models.controllers.ControllerAlarmas;
 import models.controllers.ControllerFichasMedicas;
 import models.controllers.ControllerUsuarios;
-import models.usuarios.AdapterUsuario;
 import models.usuarios.Veterinario;
 import models.usuarios.Visitante;
 import vistas.VistaCliente;
@@ -25,7 +24,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 public class UtilsVista {
 
@@ -80,7 +78,7 @@ public class UtilsVista {
             System.out.println("La preferencia ingresada no existe");
             return;
         }
-        int cantDiasPreAviso = Input.inputEntero("Ingrese cuantos dias antes de realizar el seguimiento quiere recibir un aviso: ");//TODO VER Q ONDA CON EL VISITANTE EN EL ADAPTER
+        int cantDiasPreAviso = Input.inputEntero("Ingrese cuantos dias antes de realizar el seguimiento quiere recibir un aviso: ");
         ControllerFichasMedicas.getInstancia().adoptarAnimal(fichaMedica, cliente, visitante, preferenciaRecordatorio, Periodo.crear(), cantDiasPreAviso);
     }
 

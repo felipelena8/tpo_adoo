@@ -5,6 +5,7 @@ import models.usuarios.Visitante;
 import models.utils.FormatoFecha;
 import models.utils.Periodo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +22,15 @@ public class SeguimientoAnimal {
     public SeguimientoAnimal(Visitante responsable, PreferenciaRecordatorio preferencia, Periodo cadenciaVisita, int diasPreAviso, Cliente cliente) {
         this.responsable = responsable;
         this.preferencia = preferencia;
+        this.visitas = new ArrayList<>();
         this.cadenciaVisita = cadenciaVisita;
         this.diasPreAviso = diasPreAviso;
         this.cliente = cliente;
+        this.seguirAnimal = true;
     }
 
     public boolean seDebeGenerarRecordatorio() {
-        return proximaVisita().getTime() - Periodo.crear(diasPreAviso).pasarAMilisegundos() <= new Date().getTime();
+        return proximaVisita().getTime() - Periodo.crear(diasPreAviso).pasarAMilisegundos() <= new Date().getTime() && seguirAnimal;
     }
 
     public Notificacion generarRecordatorio() {
@@ -40,6 +43,10 @@ public class SeguimientoAnimal {
         } else {
             return new Date(visitas.get(visitas.size() - 1).getFecha().getTime() + cadenciaVisita.pasarAMilisegundos());
         }
+    }
+
+    public void agregarVisita(Visita visita) {
+        visitas.add(visita);
     }
 
     public void seDebeFinalizarSeguimiento(boolean finalizar) {

@@ -10,10 +10,7 @@ import models.notificador.Notificador;
 import models.usuarios.TipoUsuario;
 import models.utils.UtilsVista;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class ControllerAlarmas {
 
@@ -37,6 +34,7 @@ public class ControllerAlarmas {
             } else {
                 for (SeguimientoAnimal seguimiento : seguimientos) {
                     if (seguimiento.seDebeGenerarRecordatorio()) {
+                        seguimiento.setSeguirAnimal(false);
                         Notificacion notificacion = seguimiento.generarRecordatorio();
                         notificador.cambiarEstrategiaNotificacion(FactoryEstrategiaNotificacion.crearEstrategiaNotificacion(seguimiento.getPreferencia()));
                         notificador.enviar(notificacion);
@@ -74,6 +72,12 @@ public class ControllerAlarmas {
         return alarmas.stream().filter(alarma -> alarma.getNombre().equals(nombre) && alarma.getRegistroMedico().equals(registroMedico)).findFirst().orElse(null);
     }
 
+    public SeguimientoAnimal buscarSeguimientoAnimal(String nombreCliente, Date fechaAdopcion) {
+        return seguimientos.stream().filter(seguimientoAnimal ->
+                seguimientoAnimal.getCliente().getNombre().equals(nombreCliente) &&
+                seguimientoAnimal.getFechaAdopcion().equals(fechaAdopcion)).findFirst().orElse(null);
+    }
+
     public void eliminarAlarma(String nombre, RegistroMedico registroMedico) {
         System.out.println(alarmas.removeIf(alarma -> alarma.getNombre().equals(nombre) && alarma.getRegistroMedico().equals(registroMedico)) ? "Se ha eliminado la alarma " + nombre :
                 "No existe una alarma con el nombre " + nombre);
@@ -89,4 +93,13 @@ public class ControllerAlarmas {
         System.out.println("Se ha creado la alarma");
     }
 
+    public void crearAlarmaSeguimiento(SeguimientoAnimal seguimientoAnimal) {
+        SeguimientoAnimal existente = buscarSeguimientoAnimal(seguimientoAnimal.getCliente().getNombre(), seguimientoAnimal.getFechaAdopcion());
+        if (existente != null) {
+            return;
+        }
+        seguimientoAnimal.setFechaAdopcion(new Date());
+        seguimientos.add(seguimientoAnimal);
+        System.out.println("Se ha creado el Seguimiento");
+    }
 }

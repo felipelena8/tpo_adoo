@@ -5,6 +5,7 @@ import models.ExportarFicha.ExportarExcel;
 import models.ExportarFicha.ExportarPDF;
 import models.ExportarFicha.TipoExportacion;
 import models.adopcion.SeguimientoAnimal;
+import models.adopcion.Visita;
 import models.animal.acciones.Accion;
 
 import java.util.ArrayList;
@@ -126,6 +127,26 @@ public class FichaMedica {
         System.out.println("Nombre | Acciones");
         for (Control control : controles) {
             System.out.println(control.getNombre() + " | " + control.getAcciones());
+        }
+    }
+
+    public void verSeguimientoAnimal() {
+        if (seguimientoAnimal != null) {
+            System.out.println("Visitador: " + seguimientoAnimal.getResponsable().getNombre());
+            System.out.println("Visitas: \n");
+            if (seguimientoAnimal.getVisitas() != null && !seguimientoAnimal.getVisitas().isEmpty()) {
+                for (Visita visita : seguimientoAnimal.getVisitas()) {
+                    System.out.println("Fecha de Visita: " + visita.getFecha());
+                    System.out.println("Encuesta:");
+                    System.out.println("Estado del animal: " + visita.getEncuesta().getEstadoAnimal().toString());
+                    System.out.println("Limpieza del hogar: " + visita.getEncuesta().getLimpiezaLugar().toString());
+                    System.out.println("Ambiente: " + visita.getEncuesta().getAmbiente().toString() + "\n");
+                }
+            } else {
+                System.out.println("Aun no se realizo ninguna visita.\n");
+            }
+        } else {
+            System.out.println("Sin Seguimiento\n");
         }
     }
 }

@@ -6,6 +6,6 @@ public class AdapterNotificacionPushCelular implements AdapterNotificadorPush {
 
     @Override
     public void enviarPush(Notificacion notificacion) {
-       JOptionPane.showMessageDialog(null,"Se ha enviado una notificacion push a los veterinarios. Mensaje: " + notificacion);
+       JOptionPane.showMessageDialog(null,"Se ha enviado una notificacion push. Mensaje: " + notificacion);
     }
 }
