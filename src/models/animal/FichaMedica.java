@@ -58,6 +58,10 @@ public class FichaMedica {
         }
     }
 
+    public boolean estaAdoptado(){
+        return seguimientoAnimal!=null;
+    }
+
     public void iniciarControl(List<Accion> acciones, String nombre) {
         controles.add(new Control(acciones, nombre));
     }

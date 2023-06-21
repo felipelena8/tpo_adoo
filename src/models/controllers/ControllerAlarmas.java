@@ -94,11 +94,6 @@ public class ControllerAlarmas {
     }
 
     public void crearAlarmaSeguimiento(SeguimientoAnimal seguimientoAnimal) {
-        SeguimientoAnimal existente = buscarSeguimientoAnimal(seguimientoAnimal.getCliente().getNombre(), seguimientoAnimal.getFechaAdopcion());
-        if (existente != null) {
-            return;
-        }
-        seguimientoAnimal.setFechaAdopcion(new Date());
         seguimientos.add(seguimientoAnimal);
         System.out.println("Se ha creado el Seguimiento");
     }

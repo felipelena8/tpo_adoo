@@ -48,7 +48,6 @@ public class VistaFichaMedica {
     }
 
     public static boolean desplegarMenu() {
-
         if (ControllerUsuarios.getInstancia().getTipoUsuario() == TipoUsuario.VETERINARIO) {
             System.out.println(menuVeterinario);
             int opcion = Input.inputEntero("Ingrese la opcion: ");
@@ -117,10 +116,14 @@ public class VistaFichaMedica {
                     UtilsVista.exportarFichaMedica(fichaMedica);
                     break;
                 case 7:
+                    if(!fichaMedica.estaAdoptado()){
+                        System.out.println("El animal no se encuentra adoptado");
+                        break;
+                    }
                     System.out.println("Complete la siguiente encuesta sobre su visita calificando cada aspecto en BUENO, REGULAR o MALO:\n");
-                    EscalaValoracion estadoAnimal = EscalaValoracion.valueOf(Input.inputTexto("Califique el estado del animal: "));
-                    EscalaValoracion limpiezaLugar = EscalaValoracion.valueOf(Input.inputTexto("Califique la limpieza del hogar: "));
-                    EscalaValoracion ambiente = EscalaValoracion.valueOf(Input.inputTexto("Califique el ambiente del hogar: "));
+                    EscalaValoracion estadoAnimal = EscalaValoracion.valueOf(Input.inputTexto("Califique el estado del animal: ").toUpperCase());
+                    EscalaValoracion limpiezaLugar = EscalaValoracion.valueOf(Input.inputTexto("Califique la limpieza del hogar: ").toUpperCase());
+                    EscalaValoracion ambiente = EscalaValoracion.valueOf(Input.inputTexto("Califique el ambiente del hogar: ").toUpperCase());
                     System.out.println();
                     fichaMedica.getSeguimientoAnimal().agregarVisita(new Visita(new Encuesta(estadoAnimal, limpiezaLugar, ambiente), new Date()));
                     SeguimientoAnimal seguimientoAnimal = ControllerAlarmas.getInstancia().buscarSeguimientoAnimal(fichaMedica.getSeguimientoAnimal().getCliente().getNombre(), fichaMedica.getSeguimientoAnimal().getFechaAdopcion());
@@ -131,6 +134,7 @@ public class VistaFichaMedica {
                     switch (opcionNuevaVisita) {
                         case 0:
                             int cantDiasPreAviso = Input.inputEntero("Ingrese cuantos dias antes de realizar el seguimiento quiere recibir un aviso: ");
+                            System.out.println("Ingrese la nueva cadencia con la que se visitara al animal");
                             Periodo periodo = Periodo.crear();
                             seguimientoAnimal.setCadenciaVisita(periodo);
                             seguimientoAnimal.setDiasPreAviso(cantDiasPreAviso);
@@ -138,6 +142,7 @@ public class VistaFichaMedica {
                             break;
                         case 1:
                             seguimientoAnimal.setSeguirAnimal(false);
+                            System.out.println("Ya no se realizara seguimiento del animal");
                             break;
                     }
                     break;

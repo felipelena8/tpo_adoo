@@ -73,12 +73,13 @@ public class UtilsVista {
         }
         PreferenciaRecordatorio preferenciaRecordatorio;
         try {
-            preferenciaRecordatorio = PreferenciaRecordatorio.valueOf(Input.inputTexto("Ingrese la preferencia de notificacion: SMS, EMAIL, WHATSAPP"));
+            preferenciaRecordatorio = PreferenciaRecordatorio.valueOf(Input.inputTexto("Ingrese la preferencia de notificacion: SMS, EMAIL, WHATSAPP").toUpperCase());
         } catch (IllegalArgumentException e) {
             System.out.println("La preferencia ingresada no existe");
             return;
         }
         int cantDiasPreAviso = Input.inputEntero("Ingrese cuantos dias antes de realizar el seguimiento quiere recibir un aviso: ");
+        System.out.println("Ingrese la periodicidad con la que se realizaran las visitas");
         ControllerFichasMedicas.getInstancia().adoptarAnimal(fichaMedica, cliente, visitante, preferenciaRecordatorio, Periodo.crear(), cantDiasPreAviso);
     }
 

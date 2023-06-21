@@ -9,6 +9,7 @@ import models.usuarios.Visitante;
 import models.utils.Periodo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ControllerFichasMedicas {
@@ -72,10 +73,13 @@ public class ControllerFichasMedicas {
             fichaMedica.pausarControles();
             adoptante.adoptar(fichaMedica.getAnimal());
             System.out.println("El cliente: " + adoptante.getNombre() + " " + adoptante.getApellido() + " ha adoptado una nueva mascota. Se ha asignado al visitante " + visitante + " como responsable para realizar el seguimiento del animal");
+            seguimientoAnimal.setFechaAdopcion(new Date());
             ControllerAlarmas.getInstancia().crearAlarmaSeguimiento(seguimientoAnimal);
         } else {
             if (adoptante.getMascotasAdoptadas().size() == 2) {
                 System.out.println("El cliente no puede adoptar mas mascotas");
+            }else{
+                System.out.println("El animal no puede ser adoptado");
             }
         }
     }
