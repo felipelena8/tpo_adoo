@@ -1,4 +1,4 @@
-package models.animal.acciones;
+package models.animal;
 
 public class Accion {
 

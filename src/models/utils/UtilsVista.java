@@ -9,7 +9,7 @@ import models.animal.Control;
 import models.animal.FichaMedica;
 import models.animal.RegistroMedico;
 import models.animal.TratamientoMedico;
-import models.animal.acciones.Accion;
+import models.animal.Accion;
 import models.controllers.ControllerAlarmas;
 import models.controllers.ControllerFichasMedicas;
 import models.controllers.ControllerUsuarios;

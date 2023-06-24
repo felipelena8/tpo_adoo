@@ -1,6 +1,5 @@
 package models.animal;
 
-import models.animal.acciones.Accion;
 import models.usuarios.Veterinario;
 import models.utils.FormatoFecha;
 

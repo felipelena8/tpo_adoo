@@ -6,7 +6,6 @@ import models.ExportarFicha.ExportarPDF;
 import models.ExportarFicha.TipoExportacion;
 import models.adopcion.SeguimientoAnimal;
 import models.adopcion.Visita;
-import models.animal.acciones.Accion;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -45,6 +45,12 @@ public class SeguimientoAnimal {
         }
     }
 
+    public void actualizarSeguimiento(int diasPreAviso, Periodo cadenciaVisita){
+        seguirAnimal=true;
+        this.diasPreAviso=diasPreAviso;
+        this.cadenciaVisita=cadenciaVisita;
+    }
+
     public void agregarVisita(Visita visita) {
         visitas.add(visita);
     }

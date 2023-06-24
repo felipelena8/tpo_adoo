@@ -2,7 +2,6 @@ package models.animal;
 
 
 import models.alarma.Alarma;
-import models.animal.acciones.Accion;
 import models.controllers.ControllerAlarmas;
 
 import java.util.List;

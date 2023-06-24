@@ -1,7 +1,7 @@
 package models.alarma;
 
 import models.animal.RegistroMedico;
-import models.animal.acciones.Accion;
+import models.animal.Accion;
 import models.notificador.Notificacion;
 import models.usuarios.Veterinario;
 import models.utils.Periodo;

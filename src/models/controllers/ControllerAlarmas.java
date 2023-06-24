@@ -64,6 +64,10 @@ public class ControllerAlarmas {
         return alarmas;
     }
 
+    public void siguienteSeguimientoAnimal(){
+
+    }
+
     public void chequearAlarmasYSeguimientos() {
         timer.schedule(sonarAlarmas, 0, 1000);
     }

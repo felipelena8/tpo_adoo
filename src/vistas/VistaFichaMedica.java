@@ -5,7 +5,7 @@ import models.adopcion.EscalaValoracion;
 import models.adopcion.SeguimientoAnimal;
 import models.adopcion.Visita;
 import models.animal.FichaMedica;
-import models.animal.acciones.Accion;
+import models.animal.Accion;
 import models.controllers.ControllerAlarmas;
 import models.controllers.ControllerUsuarios;
 import models.usuarios.TipoUsuario;
@@ -126,7 +126,7 @@ public class VistaFichaMedica {
                     EscalaValoracion ambiente = EscalaValoracion.valueOf(Input.inputTexto("Califique el ambiente del hogar: ").toUpperCase());
                     System.out.println();
                     fichaMedica.getSeguimientoAnimal().agregarVisita(new Visita(new Encuesta(estadoAnimal, limpiezaLugar, ambiente), new Date()));
-                    SeguimientoAnimal seguimientoAnimal = ControllerAlarmas.getInstancia().buscarSeguimientoAnimal(fichaMedica.getSeguimientoAnimal().getCliente().getNombre(), fichaMedica.getSeguimientoAnimal().getFechaAdopcion());
+                    //SeguimientoAnimal seguimientoAnimal = ControllerAlarmas.getInstancia().buscarSeguimientoAnimal(fichaMedica.getSeguimientoAnimal().getCliente().getNombre(), fichaMedica.getSeguimientoAnimal().getFechaAdopcion());
                     System.out.println("Desea programar una nueva visita ?\n");
                     System.out.println("0. Si");
                     System.out.println("1. No");
@@ -136,12 +136,10 @@ public class VistaFichaMedica {
                             int cantDiasPreAviso = Input.inputEntero("Ingrese cuantos dias antes de realizar el seguimiento quiere recibir un aviso: ");
                             System.out.println("Ingrese la nueva cadencia con la que se visitara al animal");
                             Periodo periodo = Periodo.crear();
-                            seguimientoAnimal.setCadenciaVisita(periodo);
-                            seguimientoAnimal.setDiasPreAviso(cantDiasPreAviso);
-                            seguimientoAnimal.setSeguirAnimal(true);
+                            fichaMedica.getSeguimientoAnimal().actualizarSeguimiento(cantDiasPreAviso, periodo);
                             break;
                         case 1:
-                            seguimientoAnimal.setSeguirAnimal(false);
+                            fichaMedica.getSeguimientoAnimal().setSeguirAnimal(false);
                             System.out.println("Ya no se realizara seguimiento del animal");
                             break;
                     }
